@@ -1,0 +1,8 @@
+{% assign original_array = "1,2,3,5,8,12" | split: "," %}
+{% assign new_array = "" | split: "," %}
+{% assign start = original_array[0] | to_number %}
+{% assign end = original_array[-1] | to_number %}
+{% for i in (start..end) %}
+  {% assign new_array = new_array | push: i %}
+{% endfor %}
+{{ new_array }}

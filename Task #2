@@ -1,8 +1,17 @@
-{% assign original_array = "1,2,3,5,8,12" | split: "," %}
-{% assign new_array = "" | split: "," %}
-{% assign start = original_array[0] | to_number %}
-{% assign end = original_array[-1] | to_number %}
-{% for i in (start..end) %}
-  {% assign new_array = new_array | push: i %}
+{% assign arr = "1,2,3,5,8,12" | split: "," %}
+{% assign newArr = '' | split:'' %}
+{% assign start = arr[0] %}
+{% for i in (0..arr.size-1) %}
+  {% assign current = arr[i] %}
+  {% if current != start %}
+    {% assign diff = current | minus: start %}
+    {% assign missingNums = '' | split:'' %}
+    {% for j in (1..diff-1) %}
+      {% assign missingNum = start | plus: j %}
+      {% assign missingNums = missingNums | push: missingNum %}
+    {% endfor %}
+    {% assign newArr = newArr | concat: missingNums %}
+  {% endif %}
+  {% assign start = current | plus: 1 %}
+  {% assign newArr = newArr | push: current %}
 {% endfor %}
-{{ new_array }}

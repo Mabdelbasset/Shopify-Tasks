@@ -1,24 +1,15 @@
-{% assign arr = "1,2,3,5,8,12" | split: "," | map: "to_integer" %}
-{% assign newArr = "" | split: "" %}
+{% assign numbers = '1,2,3,5,8,12' | split: ',' %}
+{% assign sorted_numbers = numbers | sort %}
+{% assign min_number = sorted_numbers.first | to_integer %}
+{% assign max_number = sorted_numbers.last | to_integer %}
+{% assign new_array = '' | split: ',' %}
 
-{% assign minNum = arr.min %}
-{% assign maxNum = arr.max %}
-
-{% for i in (minNum..maxNum) %}
-  {% assign found = false %}
-  {% for num in arr %}
-    {% if num == i %}
-      {% assign found = true %}
-      {% break %}
-    {% endif %}
-  {% endfor %}
-  {% if found %}
-    {% assign newArr = newArr | push: i %}
+{% for i in (min_number..max_number) %}
+  {% if sorted_numbers contains i %}
+    {% assign new_array = new_array | append: i %}
   {% else %}
-    {% assign newArr = newArr | push: '' %}
+    {% assign new_array = new_array | append: i %}
   {% endif %}
 {% endfor %}
 
-{% assign newArr = newArr | sort_natural | compact %}
-
-{{ newArr }}
+{{ new_array | join: ',' }}
